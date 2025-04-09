@@ -1,44 +1,46 @@
-import React from 'react';
-import { assets } from '../assets/assets';
+import React from "react";
+import { assets } from "../assets/assets";
 
 const Footer = () => {
   return (
-    <div className="md:mx-10">
-      <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm">
-        {/* ---------left Section --------------------*/}
+    <div className="px-6 md:px-20 pt-16 pb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-[3fr_1fr_1fr] gap-12 mb-12 text-sm">
+        {/* Left Section */}
         <div>
-          <img className="mb-5 w-40" src={assets.logo} alt="" />
-          <p className="w-full md:w-2/3 text-gray-600 leading-6">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas quo
-            dolores, perferendis molestias explicabo voluptate!
+          <p className="max-w-md leading-6 text-gray-700">
+            Prescripto is your smart companion for healthcare, connecting
+            doctors and patients seamlessly. Your health, our priority.
           </p>
         </div>
-        {/* ---------Center section----------------*/}
-        <div>
-          <p className="text-xl font-medium mb-5">COMPANY</p>
-          <ul className="flex flex-col gap-2 text-gray-600">
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact Us</li>
-            <li>Privacy Policy</li>
-          </ul>
-        </div>
-        {/* ---------right Section ---------------------*/}
 
+        {/* Center Section */}
         <div>
-          <p className="text-xl font-medium mb-5">GET IN TOUCH</p>
+          <h3 className="text-lg font-semibold mb-4 text-gray-800">COMPANY</h3>
           <ul className="flex flex-col gap-2 text-gray-600">
-            <li>+91 9155624110</li>
-            <li>abhisinghh08@gmail.com</li>
+            <li className="hover:text-black cursor-pointer">Home</li>
+            <li className="hover:text-black cursor-pointer">About</li>
+            <li className="hover:text-black cursor-pointer">Contact Us</li>
+            <li className="hover:text-black cursor-pointer">Privacy Policy</li>
+          </ul>
+        </div>
+
+        {/* Right Section */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4 text-gray-800">
+            GET IN TOUCH
+          </h3>
+          <ul className="flex flex-col gap-2 text-gray-600">
+            <li>📞 +91 91556 24110</li>
+            <li>📧 abhisinghh08@gmail.com</li>
           </ul>
         </div>
       </div>
-      <div>
-        {/* ---------Copyright text --------------------*/}
-      </div>
-      <hr />
-      <p className="py-5 text-sm text-center">
-        Copyright 2024@ Prescripto - All Right Reserved.
+
+      <hr className="border-gray-300" />
+
+      <p className="pt-6 text-center text-sm text-gray-500">
+        © 2025 <span className="font-semibold text-gray-800">Medi Home</span> —
+        All Rights Reserved.
       </p>
     </div>
   );
