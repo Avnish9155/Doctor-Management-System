@@ -27,16 +27,11 @@ const Appointment = () => {
 
     const generateAvailableSlots = () => {
       const today = new Date();
-      const currentDay = today.getDay(); // 0 (Sunday) to 6 (Saturday)
-      const daysUntilMonday = currentDay === 0 ? 1 : 8 - currentDay; // Calculate days to next Monday
-      const mondayDate = new Date(today);
-      mondayDate.setDate(today.getDate() + daysUntilMonday - 7); // Calculate the date of the previous Monday
-
       const slots = [];
 
-      for (let i = 0; i < 7; i++) {
-        let currentDate = new Date(mondayDate);
-        currentDate.setDate(mondayDate.getDate() + i);
+      for (let i = 1; i < 8; i++) {
+        let currentDate = new Date(today);
+        currentDate.setDate(today.getDate() + i);
 
         let endTime = new Date(currentDate);
         endTime.setHours(21, 0, 0, 0);
@@ -62,11 +57,11 @@ const Appointment = () => {
               minute: "2-digit",
             }),
           });
-
           currentDate.setMinutes(currentDate.getMinutes() + 30);
         }
         slots.push(timeSlots);
       }
+
       setDocSlots(slots);
     };
 
@@ -77,8 +72,8 @@ const Appointment = () => {
     docInfo && (
       <div className="container mx-auto p-4">
         <div className="flex flex-col sm:flex-row gap-4 items-start">
-          {/* Doctor's Image */}
-          <div className="bg-primary rounded-lg overflow-hidden w-full sm:max-w-72">
+          {/* Doctor Image */}
+          <div className="bg-primary rounded-xl overflow-hidden w-full sm:max-w-72">
             <img
               className="w-full h-auto"
               src={docInfo.image}
@@ -86,10 +81,10 @@ const Appointment = () => {
             />
           </div>
 
-          {/* Doctor's Details */}
-          <div className="flex-1 border border-gray-400 rounded-lg p-6 bg-white mx-2 sm:mx-0">
-            <p className="text-xl font-semibold flex items-center gap-2">
-              {docInfo.name}{" "}
+          {/* Doctor Details */}
+          <div className="flex-1 border border-gray-300 rounded-xl p-6 bg-white">
+            <p className="text-2xl font-semibold flex items-center gap-2">
+              {docInfo.name}
               <img
                 src={assets.verified_icon}
                 alt="Verified"
@@ -100,24 +95,24 @@ const Appointment = () => {
               <p>
                 {docInfo.degree} - {docInfo.speciality}
               </p>
-              <button className="py-0.5 px-2 border text-xs rounded-full">
+              <button className="py-0.5 px-2 border text-xs rounded-full bg-gray-100">
                 {docInfo.experience}
               </button>
             </div>
 
-            {/* About Section */}
             <div className="mt-4">
               <p className="flex items-center gap-1 text-sm font-medium text-gray-900 mt-3">
                 About{" "}
                 <img src={assets.info_icon} alt="Info" className="w-4 h-4" />
               </p>
-              <p className="text-gray-500 max-w-[700px] mt-1">
+              <p className="text-gray-500 max-w-[700px] mt-1 leading-relaxed">
                 {docInfo.about}
               </p>
             </div>
-            <p className="text-gray-500 font-medium mt-4">
+
+            <p className="text-gray-600 font-medium mt-4">
               Appointment fee:{" "}
-              <span className="text-gray-600">
+              <span className="text-gray-700">
                 {currencySymbol}
                 {docInfo.fees}
               </span>
@@ -126,47 +121,57 @@ const Appointment = () => {
         </div>
 
         {/* Booking Slots */}
-        <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700">
-          <p>Booking Slots</p>
-          <div className="flex gap-3 items-center w-full overflow-x-scroll mt-4">
+        <div className="sm:ml-72 sm:pl-4 mt-8 font-medium text-gray-700">
+          <p className="text-lg font-semibold">Booking Slots</p>
+
+          {/* Day Selector */}
+          <div className="flex gap-4 items-center overflow-x-auto mt-5 pb-2 scrollbar-hide">
             {docSlots.length > 0 &&
               docSlots.map((item, index) => (
                 <div
                   key={index}
                   onClick={() => setSlotIndex(index)}
-                  className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${
-                    slotIndex === index
-                      ? "bg-primary text-white"
-                      : "border border-gray-200"
-                  }`}
+                  className={`text-center px-4 py-3 min-w-[60px] rounded-full cursor-pointer transition-all duration-300
+                    ${
+                      slotIndex === index
+                        ? "bg-primary text-white font-semibold shadow"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
                 >
                   <p>
-                    {item.length > 0 && dayOfWeek[item[0].datetime.getDay()]}
+                    {item.length > 0 &&
+                      dayOfWeek[item[0].datetime.getDay()].toUpperCase()}
                   </p>
-                  <p>{item.length > 0 && item[0].datetime.getDate()}</p>
+                  <p className="text-sm">
+                    {item.length > 0 && item[0].datetime.getDate()}
+                  </p>
                 </div>
               ))}
           </div>
 
-          <div className="flex items-center gap-3 w-full overflow-x-scroll mt-4">
+          {/* Time Slot Selector */}
+          <div className="flex flex-wrap gap-3 w-full mt-6">
             {docSlots.length > 0 &&
               docSlots[slotIndex]?.map((item, index) => (
                 <p
                   key={index}
                   onClick={() => setSlotTime(item.time)}
-                  className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${
-                    item.time === slotTime
-                      ? "bg-primary text-white"
-                      : "text-gray-400 border border-gray-300"
-                  }`}
+                  className={`text-sm px-5 py-2 rounded-full cursor-pointer transition-all duration-200
+                    ${
+                      item.time === slotTime
+                        ? "bg-primary text-white font-medium shadow"
+                        : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    }`}
                 >
                   {item.time.toLowerCase()}
                 </p>
               ))}
           </div>
+
+          {/* Book Button */}
           <button
             onClick={() => navigate(`/appointment/${docId}`)}
-            className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6"
+            className="bg-primary hover:bg-blue-700 text-white text-sm font-semibold px-10 py-3 rounded-full mt-6 transition-colors duration-300"
           >
             Book an appointment
           </button>

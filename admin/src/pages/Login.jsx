@@ -1,37 +1,55 @@
 import { useContext, useState } from "react";
 import { AdminContext } from "../context/AdminContext";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { DoctorContext } from "../context/DoctorContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [state, setState] = useState("Admin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const { setAToken, backendUrl } = useContext(AdminContext);
-  const [errorMsg, setErrorMsg] = useState("");
+  const { setDToken } = useContext(DoctorContext);
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    setErrorMsg("");
 
     try {
-      const endpoint =
-        state === "Admin" ? "/api/admin/login" : "/api/doctor/login";
+      if (state === "Admin") {
+        const { data } = await axios.post(backendUrl + "/api/admin/login", {
+          email,
+          password,
+        });
 
-      const { data } = await axios.post(backendUrl + endpoint, {
-        email,
-        password,
-      });
-
-      if (data.success) {
-        localStorage.setItem("aToken", data.token);
-        setAToken(data.token);
-        console.log(`${state} login successful`);
+        if (data.success) {
+          localStorage.setItem("aToken", data.token);
+          setAToken(data.token);
+          toast.success("Admin Logged In");
+          navigate("/admin-dashboard");
+        } else {
+          toast.error(data.message);
+        }
       } else {
-        setErrorMsg("Invalid credentials");
+        const { data } = await axios.post(backendUrl + "/api/doctor/login", {
+          email,
+          password,
+        });
+
+        if (data.success) {
+          localStorage.setItem("dToken", data.token);
+          setDToken(data.token);
+          toast.success("Doctor Logged In");
+          navigate("/doctor-dashboard");
+        } else {
+          toast.error(data.message);
+        }
       }
     } catch (error) {
-      console.error(error);
-      setErrorMsg("Login failed. Please try again.");
+      toast.error("Login failed. Please try again.");
+      console.log("Login error:", error);
     }
   };
 
@@ -41,7 +59,6 @@ const Login = () => {
         <p className="text-2xl font-semibold mt-auto">
           <span className="text-primary">{state}</span> Login
         </p>
-        {errorMsg && <p className="text-red-500 text-sm w-full">{errorMsg}</p>}
         <div className="w-full">
           <p>Email</p>
           <input
@@ -65,6 +82,7 @@ const Login = () => {
         <button className="bg-primary text-white w-full py-2 rounded-md text-base">
           Login
         </button>
+
         {state === "Admin" ? (
           <p>
             Doctor Login?{" "}

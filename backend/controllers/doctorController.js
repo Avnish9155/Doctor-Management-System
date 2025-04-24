@@ -1,13 +1,51 @@
-import doctorModel from '../models/doctorModel.js';
+import doctorModel from "../models/doctorModel.js";
 
-const getAllDoctors = async (req, res) => {
+// 🔄 Change Availability of Doctor
+const changeAvailability = async (req, res) => {
   try {
-    const doctors = await doctorModel.find(); // MongoDB से सभी doctors को fetch करो
-    res.status(200).json(doctors); // Success response के साथ doctors की list भेजो
+    const { docId } = req.body;
+
+    const doctor = await doctorModel.findById(docId);
+
+    if (!doctor) {
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
+
+    doctor.available = !doctor.available;
+    await doctor.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Availability status updated successfully",
+    });
   } catch (error) {
-    console.error("Error fetching doctors:", error);
-    res.status(500).json({ error: 'Doctors को fetch करने में error' }); // Error response भेजो
+    console.error("Error in changeAvailability:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
   }
 };
 
-export { getAllDoctors };
+// 📋 Get All Doctors List (excluding password and email)
+const doctorList = async (req, res) => {
+  try {
+    const doctors = await doctorModel.find({}).select("-password -email");
+
+    res.status(200).json({
+      success: true,
+      doctors,
+    });
+  } catch (error) {
+    console.error("Error in doctorList:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};
+
+export { changeAvailability, doctorList };

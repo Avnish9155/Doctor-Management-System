@@ -14,27 +14,35 @@ const TopDoctors = () => {
       </p>
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-5 px-3 sm:px-0">
-        {doctors.slice(0, 10).map((item, index) => (
-          <div
-            onClick={() => navigate(`/appointment/${item._id}`)} // Corrected doctor ID access
-            className="border border-blue-300 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-300 shadow-lg hover:shadow-xl"
-            key={index}
-          >
-            <img
-              className="bg-blue-50 w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-              src={item.image}
-              alt={item.name}
-            />
-            <div className="p-4">
-              <div className="flex items-center gap-2 text-sm text-green-500">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                <p>Available</p>
+        {Array.isArray(doctors) && doctors.length > 0 ? (
+          doctors.slice(0, 10).map((item, index) => (
+            <div
+              onClick={() => navigate(`/appointment/${item._id}`)}
+              className="border border-blue-300 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-300 shadow-lg hover:shadow-xl"
+              key={index}
+            >
+              <img
+                className="bg-blue-50 w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                src={item.image}
+                alt={item.name}
+              />
+              <div className="p-4">
+                <div className="flex items-center gap-2 text-sm text-green-500">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  <p>Available</p>
+                </div>
+                <p className="text-gray-900 text-lg font-semibold">
+                  {item.name}
+                </p>
+                <p className="text-gray-600 text-sm">{item.speciality}</p>
               </div>
-              <p className="text-gray-900 text-lg font-semibold">{item.name}</p>
-              <p className="text-gray-600 text-sm">{item.speciality}</p>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-center text-gray-500 col-span-full">
+            No doctors available.
+          </p>
+        )}
       </div>
 
       <button
