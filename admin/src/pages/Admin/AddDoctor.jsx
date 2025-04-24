@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { assets } from "../../assets/assets";
 import { AdminContext } from "../../context/AdminContext";
 import { toast } from "react-toastify";
@@ -19,8 +19,39 @@ const AddDoctor = () => {
 
   const { backendUrl, aToken } = useContext(AdminContext);
 
+  // Cleanup image URL when docImg changes
+  useEffect(() => {
+    return () => {
+      if (docImg) {
+        URL.revokeObjectURL(docImg);
+      }
+    };
+  }, [docImg]);
+
+  const resetForm = () => {
+    setDocImg(null);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setExperience("1 Year");
+    setFees("");
+    setAbout("");
+    setSpeciality("General physician");
+    setDegree("");
+    setAddress1("");
+    setAddress2("");
+  };
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+
+    if (!name || !email || !password || !fees) {
+      return toast.error("Please fill in all required fields.");
+    }
+
+    if (!email.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
+      return toast.error("Please enter a valid email address.");
+    }
 
     try {
       if (!docImg) {
@@ -55,17 +86,7 @@ const AddDoctor = () => {
 
       if (data.success) {
         toast.success(data.message);
-        setDocImg(null);
-        setName("");
-        setEmail("");
-        setPassword("");
-        setExperience("1 Year");
-        setFees("");
-        setAbout("");
-        setSpeciality("General physician");
-        setDegree("");
-        setAddress1("");
-        setAddress2("");
+        resetForm();
       } else {
         toast.error(data.message);
       }

@@ -5,28 +5,58 @@ import { Link } from "react-router-dom";
 const SpecialityMenu = () => {
   return (
     <div
-      className="flex flex-col items-center gap-6 py-16 bg-gradient-to-r from-blue-500 to-purple-600 text-white"
       id="speciality"
+      style={{
+        backgroundColor: "#4a90e2",
+        padding: "40px 0",
+        color: "white",
+        textAlign: "center",
+      }}
     >
-      <h1 className="text-4xl font-bold">Find by Speciality</h1>
-      <p className="sm:w-1/2 text-center text-lg">
-        Simply browse through our extensive list of trusted doctors and schedule
-        your appointment.
-      </p>
-      <div className="flex sm:justify-center gap-6 pt-5 w-full overflow-x-auto">
+      <h1
+        style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "20px" }}
+      >
+        Find by Speciality
+      </h1>
+      <div
+        style={{
+          display: "flex",
+          overflowX: "auto",
+          padding: "10px 0",
+          gap: "20px",
+          justifyContent: "center",
+        }}
+      >
         {specialityData.map((item, index) => (
           <Link
-            onClick={() => window.scrollTo(0, 0)}
-            className="flex flex-col items-center text-sm cursor-pointer flex-shrink-0 transition-transform transform hover:scale-105 hover:shadow-lg"
             key={index}
-            to={`/doctors/${item.speciality}`} // Corrected to prop
+            to={`/doctors/${item.speciality}`}
+            onClick={() => window.scrollTo(0, 0)}
+            style={{
+              flexShrink: 0,
+              textDecoration: "none",
+              color: "white",
+              width: "100px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <img
-              className="w-20 sm:w-28 mb-3 rounded-full border-2 border-white"
               src={item.image}
               alt={item.speciality}
+              style={{
+                width: "70px",
+                height: "70px",
+                borderRadius: "50%",
+                border: "2px solid white",
+                marginBottom: "8px",
+                objectFit: "cover",
+              }}
             />
-            <p className="font-semibold">{item.speciality}</p>
+            <p style={{ fontSize: "14px", fontWeight: "500" }}>
+              {item.speciality}
+            </p>
           </Link>
         ))}
       </div>

@@ -1,36 +1,32 @@
 import React from "react";
 
-
-
 const Footer = () => {
   return (
-    <div className="px-6 md:px-20 pt-16 pb-8">
-      <div className="grid grid-cols-1 sm:grid-cols-[3fr_1fr_1fr] gap-12 mb-12 text-sm">
+    <div className="px-4 py-10 bg-gray-100 text-sm text-gray-700">
+      <div className="flex flex-col md:flex-row justify-between gap-8 mb-6">
         {/* Left Section */}
-        <div>
-          <p className="max-w-md leading-6 text-gray-700">
-            Prescripto is your smart companion for healthcare, connecting
-            doctors and patients seamlessly. Your health, our priority.
+        <div className="md:w-1/2">
+          <p>
+            Multi Care is your simple companion for healthcare, helping connect
+            doctors and patients. Your health matters to us.
           </p>
         </div>
 
-        {/* Center Section */}
+        {/* Right Section - Company Links */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">COMPANY</h3>
-          <ul className="flex flex-col gap-2 text-gray-600">
-            <li className="hover:text-black cursor-pointer">Home</li>
-            <li className="hover:text-black cursor-pointer">About</li>
-            <li className="hover:text-black cursor-pointer">Contact Us</li>
-            <li className="hover:text-black cursor-pointer">Privacy Policy</li>
+          <p className="font-semibold mb-2 text-gray-800">Company</p>
+          <ul className="space-y-1">
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact Us</li>
+            <li>Privacy Policy</li>
           </ul>
         </div>
 
-        {/* Right Section */}
+        {/* Right Section - Contact */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">
-            GET IN TOUCH
-          </h3>
-          <ul className="flex flex-col gap-2 text-gray-600">
+          <p className="font-semibold mb-2 text-gray-800">Get in Touch</p>
+          <ul className="space-y-1">
             <li>📞 +91 91556 24110</li>
             <li>📧 abhisinghh08@gmail.com</li>
           </ul>
@@ -39,9 +35,8 @@ const Footer = () => {
 
       <hr className="border-gray-300" />
 
-      <p className="pt-6 text-center text-sm text-gray-500">
-        © 2025 <span className="font-semibold text-gray-800">Medi Home</span> —
-        All Rights Reserved.
+      <p className="text-center text-xs text-gray-500 mt-4">
+        © 2025 Multi Care — All Rights Reserved.
       </p>
     </div>
   );

@@ -35,7 +35,7 @@ const MyAppointments = () => {
                 <span className="text-sm text-neutral-700 font-medium">
                   Date & Time:
                 </span>{" "}
-                25, July, 2024 | 8:30 PM
+                25, jan, 2025 | 8:30 PM
               </p>
             </div>
             <div></div>

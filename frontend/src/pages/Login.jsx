@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,13 +9,15 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [state, setState] = useState("Sign Up");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    setLoading(true); // Show loading state
+
     try {
       if (state === "Sign Up") {
         const { data } = await axios.post(backendUrl + "/api/user/register", {
@@ -23,7 +25,7 @@ const Login = () => {
           password,
           email,
         });
-        console.log("data:", data);
+
         if (data.success) {
           localStorage.setItem("token", data.token);
           setToken(data.token);
@@ -45,8 +47,9 @@ const Login = () => {
         }
       }
     } catch (error) {
-      console.log("error:", error);
       toast.error(error.message);
+    } finally {
+      setLoading(false); // Hide loading state after request
     }
   };
 
@@ -55,14 +58,18 @@ const Login = () => {
       navigate("/");
     }
   }, [navigate, token]);
+
   return (
-    <form onSubmit={onSubmitHandler} className="min-h-[80vh] flex items-center">
-      <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[320px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg ">
-        <p className="text-2xl font-semibold">
+    <form
+      onSubmit={onSubmitHandler}
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50"
+    >
+      <div className="flex flex-col gap-4 items-start p-8 min-w-[320px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg bg-white">
+        <p className="text-2xl font-semibold text-center">
           {state === "Sign Up" ? "Create Account" : "Login"}
         </p>
-        <p>
-          Please {state === "Sign Up" ? "sign up" : "log in"} to book
+        <p className="text-center text-gray-600 mb-4">
+          Please {state === "Sign Up" ? "sign up" : "log in"} to book an
           appointment
         </p>
 
@@ -70,11 +77,12 @@ const Login = () => {
           <div className="w-full">
             <p>Full Name</p>
             <input
-              className="border border-zinc-300 rounded w-full p-2 mt-1"
+              className="border border-zinc-300 rounded w-full p-2 mt-1 focus:ring-2 focus:ring-primary"
               type="text"
               onChange={(e) => setName(e.target.value)}
               value={name}
               required
+              autoFocus
             />
           </div>
         )}
@@ -82,32 +90,40 @@ const Login = () => {
         <div className="w-full">
           <p>Email</p>
           <input
-            className="border border-zinc-300 rounded w-full p-2 mt-1"
+            className="border border-zinc-300 rounded w-full p-2 mt-1 focus:ring-2 focus:ring-primary"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             required
           />
         </div>
+
         <div className="w-full">
           <p>Password</p>
           <input
-            className="border border-zinc-300 rounded w-full p-2 mt-1"
+            className="border border-zinc-300 rounded w-full p-2 mt-1 focus:ring-2 focus:ring-primary"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             required
           />
         </div>
+
         <button
           type="submit"
-          className="bg-primary text-white w-full py-2 rounded-md text-base"
+          disabled={loading}
+          className="bg-primary text-white w-full py-2 rounded-md text-base mt-4 disabled:opacity-50"
         >
-          {state === "Sign Up" ? "Create Account" : "Login"}
+          {loading
+            ? "Loading..."
+            : state === "Sign Up"
+            ? "Create Account"
+            : "Login"}
         </button>
+
         {state === "Sign Up" ? (
-          <p className="">
-            Already have an account ?
+          <p className="text-center mt-4">
+            Already have an account?{" "}
             <span
               onClick={() => setState("Login")}
               className="text-primary underline cursor-pointer"
@@ -116,8 +132,8 @@ const Login = () => {
             </span>
           </p>
         ) : (
-          <p>
-            Create an new account ?
+          <p className="text-center mt-4">
+            Create a new account?{" "}
             <span
               onClick={() => setState("Sign Up")}
               className="text-primary underline cursor-pointer"

@@ -3,73 +3,63 @@ import { assets } from "../assets/assets";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 px-4 sm:px-12 py-10">
+    <div className="min-h-screen bg-gray-100 px-4 py-8">
       {/* About Us Heading */}
-      <div className="text-center text-3xl font-semibold text-gray-600 mb-10">
-        <p>
-          ABOUT <span className="text-gray-800">US</span>
-        </p>
+      <div className="text-center text-2xl font-bold text-gray-800 mb-8">
+        <p>About Us</p>
       </div>
 
       {/* Image and About Text */}
-      <div className="my-10 flex flex-col md:flex-row gap-12 items-center">
+      <div className="flex flex-col md:flex-row gap-8 items-center mb-12">
         <img
-          className="w-full md:max-w-[360px] rounded-lg shadow-md"
+          className="w-full md:max-w-[300px] rounded border"
           src={assets.about_image}
           alt="About"
         />
-        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-[15px] text-gray-700">
+        <div className="md:w-2/3 text-base text-gray-700 space-y-4">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum
-            facere consequatur, eum a sapiente nihil consectetur enim eveniet
-            dolor repellendus.
+            We aim to make healthcare simpler by connecting patients to the
+            right doctors. Our platform allows you to search, compare, and book
+            appointments with ease.
           </p>
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo,
-            beatae quaerat, animi voluptatum adipisci nulla inventore
-            consequuntur accusantium rem incidunt, repellat ipsum distinctio
-            velit aut.
+            We believe in accessible and personalized healthcare services for
+            everyone, backed by modern technology and a user-friendly interface.
           </p>
 
-          <b className="text-gray-800 text-base">Our Vision</b>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veniam
-            culpa asperiores doloribus, consectetur mollitia ut autem
-            praesentium hic?
-          </p>
+          <div>
+            <b className="text-gray-900">Our Vision</b>
+            <p>
+              To provide a reliable and simple healthcare system that empowers
+              people to take care of their health better.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Why Choose Us Heading */}
-      <div className="text-xl font-semibold text-center text-gray-700 mb-8">
-        <p>
-          WHY <span className="text-primary">CHOOSE US</span>
-        </p>
+      <div className="text-xl font-semibold text-center text-gray-800 mb-6">
+        <p>Why Choose Us</p>
       </div>
 
       {/* Choose Us Cards */}
-      <div className="flex flex-col md:flex-row gap-6 md:gap-10 mb-20">
-        <div className="border border-gray-300 px-8 py-10 rounded-lg shadow hover:bg-primary hover:text-white transition-all duration-300 text-gray-700 cursor-pointer flex-1">
-          <b className="text-lg">Efficiency:</b>
-          <p className="mt-2">
-            Streamlined appointment scheduling that fits into your busy
-            lifestyle.
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-700 text-base">
+        <div className="bg-white border rounded p-4">
+          <b>Efficiency</b>
+          <p className="mt-2 text-sm">
+            Easy and quick appointment booking in just a few steps.
           </p>
         </div>
-
-        <div className="border border-gray-300 px-8 py-10 rounded-lg shadow hover:bg-primary hover:text-white transition-all duration-300 text-gray-700 cursor-pointer flex-1">
-          <b className="text-lg">Convenience:</b>
-          <p className="mt-2">
-            Access to a network of trusted healthcare professionals in your
-            area.
+        <div className="bg-white border rounded p-4">
+          <b>Convenience</b>
+          <p className="mt-2 text-sm">
+            Access doctors nearby without long wait times.
           </p>
         </div>
-
-        <div className="border border-gray-300 px-8 py-10 rounded-lg shadow hover:bg-primary hover:text-white transition-all duration-300 text-gray-700 cursor-pointer flex-1">
-          <b className="text-lg">Personalization:</b>
-          <p className="mt-2">
-            Tailored recommendations and reminders to help you stay on top of
-            your health.
+        <div className="bg-white border rounded p-4">
+          <b>Personalization</b>
+          <p className="mt-2 text-sm">
+            Get health tips and suggestions based on your activity.
           </p>
         </div>
       </div>

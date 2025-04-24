@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { AdminContext } from "../../context/AdminContext";
 import MoveUpOnRender from "../../components/MoveUpOnRender";
 
@@ -15,32 +15,34 @@ const DoctorsList = () => {
 
   console.log("DoctorsList component rendered");
 
-  useEffect(() => {
-    console.log("DoctorsList component useEffect triggered");
-    console.log("aToken in DoctorsList useEffect:", aToken);
-    if (aToken) {
-      console.log("aToken is available, fetching doctors...");
+  // Fetch doctors with error handling
+  const fetchDoctors = useCallback(async () => {
+    try {
       setLoading(true);
       setError(null);
-      getAllDoctors()
-        .then(() => setLoading(false))
-        .catch((err) => {
-          setError(err.message || "Failed to fetch doctors.");
-          setLoading(false);
-        });
+      await getAllDoctors();
+    } catch (err) {
+      setError(err.message || "Failed to fetch doctors.");
+    } finally {
+      setLoading(false);
+    }
+  }, [getAllDoctors]);
+
+  useEffect(() => {
+    console.log("DoctorsList component useEffect triggered");
+    if (aToken) {
+      console.log("aToken is available, fetching doctors...");
+      fetchDoctors();
     } else {
       console.log("aToken is not available");
       setLoading(false);
     }
-  }, [aToken, getAllDoctors]);
+  }, [aToken, fetchDoctors]);
 
   useEffect(() => {
     console.log("Context Doctors updated:", contextDoctors);
     setDoctorsToDisplay(contextDoctors);
   }, [contextDoctors]);
-
-  console.log("DoctorsList - Doctors state before return:", doctorsToDisplay);
-  console.log("Doctors state in render:", doctorsToDisplay);
 
   if (loading) {
     return <p>Loading doctors...</p>;

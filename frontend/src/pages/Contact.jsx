@@ -38,7 +38,7 @@ const Contact = () => {
           </p>
 
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Careers at <span className="text-indigo-600">Medi Home</span>
+            Careers at <span className="text-indigo-600">Multi Care</span>
           </h3>
           <p className="text-gray-600 mb-6">
             Learn more about our teams and job openings.

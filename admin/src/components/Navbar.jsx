@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { assets } from "../assets/assets";
 import { AdminContext } from "../context/AdminContext";
 import { useNavigate } from "react-router-dom"; // 🔁 navigate करने के लिए
 
@@ -18,8 +17,10 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center p-4 bg-blue-600 text-white">
       <div className="flex items-center gap-4">
-        <img src={assets.admin_logo} alt="Logo" className="h-10" />
-        <p className="text-lg font-semibold">{aToken ? "Admin" : "Doctor"}</p>
+        <p className="text-lg font-semibold">Admin Dashboard</p>
+        <p className="text-lg font-semibold">
+          {aToken ? "Multi Care" : "Doctor"}
+        </p>
       </div>
       <button
         onClick={Logout}

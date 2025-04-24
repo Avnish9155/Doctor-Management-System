@@ -7,41 +7,71 @@ const TopDoctors = () => {
   const { doctors } = useContext(AppContext);
 
   return (
-    <div className="flex flex-col items-center gap-6 my-16 text-gray-900 md:mx-10">
-      <h1 className="text-4xl font-bold text-center">Top Doctors to Book</h1>
-      <p className="sm:w-1/2 text-center text-lg">
+    <div style={{ margin: "40px 20px", textAlign: "center", color: "#333" }}>
+      <h1 style={{ fontSize: "28px", fontWeight: "bold" }}>Doctor List</h1>
+      <p style={{ maxWidth: "600px", margin: "10px auto", fontSize: "16px" }}>
         These are the top doctors in the area based on reviews.
       </p>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-5 px-3 sm:px-0">
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: "20px",
+          marginTop: "30px",
+        }}
+      >
         {Array.isArray(doctors) && doctors.length > 0 ? (
           doctors.slice(0, 10).map((item, index) => (
             <div
-              onClick={() => navigate(`/appointment/${item._id}`)}
-              className="border border-blue-300 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-300 shadow-lg hover:shadow-xl"
               key={index}
+              onClick={() => navigate(`/appointment/${item._id}`)}
+              style={{
+                width: "220px",
+                border: "1px solid #ccc",
+                borderRadius: "10px",
+                overflow: "hidden",
+                cursor: "pointer",
+                backgroundColor: "#f9f9f9",
+              }}
             >
               <img
-                className="bg-blue-50 w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
                 src={item.image}
                 alt={item.name}
+                style={{
+                  width: "100%",
+                  height: "150px",
+                  objectFit: "cover",
+                }}
               />
-              <div className="p-4">
-                <div className="flex items-center gap-2 text-sm text-green-500">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  <p>Available</p>
-                </div>
-                <p className="text-gray-900 text-lg font-semibold">
+              <div style={{ padding: "10px", textAlign: "left" }}>
+                <p
+                  style={{
+                    fontSize: "14px",
+                    color: "green",
+                    marginBottom: "4px",
+                  }}
+                >
+                  ● Available
+                </p>
+                <p
+                  style={{
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    marginBottom: "4px",
+                  }}
+                >
                   {item.name}
                 </p>
-                <p className="text-gray-600 text-sm">{item.speciality}</p>
+                <p style={{ fontSize: "14px", color: "#555" }}>
+                  {item.speciality}
+                </p>
               </div>
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500 col-span-full">
-            No doctors available.
-          </p>
+          <p style={{ color: "#888" }}>No doctors available.</p>
         )}
       </div>
 
@@ -50,7 +80,16 @@ const TopDoctors = () => {
           navigate("/doctors");
           window.scrollTo(0, 0);
         }}
-        className="bg-blue-600 text-white px-12 py-3 rounded-full mt-10 hover:bg-blue-700 transition duration-300"
+        style={{
+          marginTop: "40px",
+          backgroundColor: "#1976d2",
+          color: "white",
+          padding: "10px 30px",
+          borderRadius: "5px",
+          border: "none",
+          fontSize: "16px",
+          cursor: "pointer",
+        }}
       >
         More
       </button>
